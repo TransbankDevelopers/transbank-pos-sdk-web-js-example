@@ -1,13 +1,14 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <h1 className="text-4xl text-red-500">Hola</h1>
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
+        <p className="text-green-500">
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
         <a
