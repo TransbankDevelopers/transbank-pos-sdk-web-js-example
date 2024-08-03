@@ -7,7 +7,6 @@
   font-size: 1rem;
   height: 46px;
   border-radius: 4px;
-  text-decoration: none;
   cursor: pointer;
 }
 
@@ -19,12 +18,14 @@
   background-color: var(--tbk-white);
   color: var(--tbk-red);
   border: 1px solid var(--tbk-red);
+  text-decoration: none;
 }
 
 .tbk-button.red {
   background-color: var(--tbk-red);
   color: var(--tbk-white);
   border: 1px solid var(--tbk-red);
+  text-decoration: none;
 }
 
 .tbk-button-text {
