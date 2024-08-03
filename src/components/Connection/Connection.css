@@ -1,11 +1,11 @@
 .connection {
   display: flex;
+  flex-direction: column;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.08);
   width: 996px;
-  height: 375px;
   border-radius: 15px;
   align-items: center;
-  padding: 62px 101px 99px 30px;
+  padding: 62px 101px 99px 56px;
   gap: 30px;
 }
 
@@ -16,14 +16,23 @@
 
 .connection-content {
   display: flex;
-  flex-direction: column;
   gap: 20px;
 }
 
+.connect {
+  display: flex;
+  flex-direction: column;
+}
+
 .connection-text {
+  width: 590px;
+  height: 153px;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
   line-height: 30px;
   letter-spacing: 0.25px;
+  display: flex;
+  align-items: center;
+  text-align: start;
 }
