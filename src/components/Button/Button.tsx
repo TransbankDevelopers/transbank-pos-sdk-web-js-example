@@ -8,7 +8,7 @@ export enum ButtonType {
 }
 
 interface ButtonProps {
-  text?: string;
+  text: string;
   width?: number;
   height?: number;
   type: ButtonType;
