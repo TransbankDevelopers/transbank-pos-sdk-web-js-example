@@ -1,0 +1,21 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+}
+
+.main-text {
+  display: flex;
+  flex-direction: column;
+  width: 978px;
+  height: 95px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 43px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 44px;
+  letter-spacing: 0.25px;
+}
