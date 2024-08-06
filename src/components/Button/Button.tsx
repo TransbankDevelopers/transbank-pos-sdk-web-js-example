@@ -8,16 +8,23 @@ export enum ButtonType {
 }
 
 interface ButtonProps {
-  text: string;
   width?: number;
   height?: number;
   type: ButtonType;
   isLoading?: boolean;
   handleClick(): void;
+  children: React.ReactNode;
 }
 
 export default function Button(props: ButtonProps) {
-  const { text, width, height, type, handleClick, isLoading = false } = props;
+  const {
+    width,
+    height,
+    type,
+    handleClick,
+    isLoading = false,
+    children,
+  } = props;
 
   const buttonClassName = cx("tbk-button", {
     white: type === ButtonType.WHITE,
@@ -31,7 +38,7 @@ export default function Button(props: ButtonProps) {
       onClick={handleClick}
       disabled={isLoading}
     >
-      {isLoading ? <Spinner /> : text}
+      {isLoading ? <Spinner /> : children}
     </button>
   );
 }
