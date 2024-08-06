@@ -22,11 +22,11 @@
 .connect {
   display: flex;
   flex-direction: column;
+  gap: 11px;
 }
 
 .connection-text {
   width: 590px;
-  height: 153px;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -35,4 +35,5 @@
   display: flex;
   align-items: center;
   text-align: start;
+  padding: 20px 0px 20px 0px;
 }
