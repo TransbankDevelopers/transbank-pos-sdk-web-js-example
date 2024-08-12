@@ -60,6 +60,7 @@
   display: flex;
   gap: 8rem;
   margin-top: 3rem;
+  justify-content: center;
 }
 
 .div1 {
@@ -101,7 +102,7 @@
   width: 488px;
 }
 .div4 {
-  background-color: var(--tbk-red);
+  width: 50%;
 }
 
 .operation-title {
@@ -158,7 +159,3 @@ input[type="radio"]:checked {
   box-shadow: 0 0 0 2px #ff5722;
   border: 2px solid var(--tbk-white);
 }
-
-/* div {
-  border: 1px solid #000;
-} */

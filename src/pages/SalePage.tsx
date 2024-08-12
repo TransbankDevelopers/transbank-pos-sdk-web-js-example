@@ -1,10 +1,11 @@
 import ProductCard from "../components/ProductCard/ProductCard";
-import "./SalePage.css";
 import burgerImg from "../assets/burger.png";
 import friesImg from "../assets/french-fries.png";
 import iceCreamImg from "../assets/ice-cream.png";
 import coffeeImg from "../assets/coffee.png";
 import Button, { ButtonType } from "../components/Button/Button";
+import Snippet from "../components/Snippet/Snippet";
+import "./SalePage.css";
 
 const SalePage = () => {
   return (
@@ -207,10 +208,7 @@ const SalePage = () => {
             </div>
           </div>
           <div className="div4">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
-            libero totam at quaerat maiores repellendus dolorem sapiente fugiat
-            debitis magnam non pariatur architecto officiis animi accusantium,
-            alias molestiae natus porro.
+            <Snippet code="{test: test}" />
           </div>
         </div>
       </div>
