@@ -5,6 +5,7 @@ import Spinner from "./Spinner";
 export enum ButtonType {
   WHITE = "white",
   RED = "red",
+  POS = "pos",
 }
 
 interface ButtonProps {
@@ -14,6 +15,7 @@ interface ButtonProps {
   isLoading?: boolean;
   handleClick(): void;
   children: React.ReactNode;
+  additionalClass?: string;
 }
 
 export default function Button(props: ButtonProps) {
@@ -24,12 +26,18 @@ export default function Button(props: ButtonProps) {
     handleClick,
     isLoading = false,
     children,
+    additionalClass = "",
   } = props;
 
-  const buttonClassName = cx("tbk-button", {
+  var buttonClassName = cx("tbk-button", {
     white: type === ButtonType.WHITE,
     red: type === ButtonType.RED,
+    pos: type === ButtonType.POS,
   });
+
+  if (additionalClass) {
+    buttonClassName += " " + additionalClass;
+  }
 
   return (
     <button
@@ -38,7 +46,11 @@ export default function Button(props: ButtonProps) {
       onClick={handleClick}
       disabled={isLoading}
     >
-      {isLoading ? <Spinner /> : children}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <span className="tbk-button-text">{children}</span>
+      )}
     </button>
   );
 }
