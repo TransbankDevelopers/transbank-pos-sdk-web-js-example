@@ -14,10 +14,9 @@
 .product-data {
   display: flex;
   flex-direction: column;
-  padding-left: 1rem;
   padding-top: 14px;
   padding-bottom: 10px;
-  /* width: 100%; */
+  flex-grow: 1;
 }
 
 .card-title {

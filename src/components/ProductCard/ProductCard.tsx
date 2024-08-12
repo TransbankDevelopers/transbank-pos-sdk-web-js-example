@@ -15,8 +15,8 @@ const ProductCard = (props: ProductCardProps) => {
         <img src={imagePath} alt={alt} />
       </div>
       <div className="product-data">
-        <span className="card-title">Alimento</span>
-        <span className="card-product">{children}</span>
+        <span className="card-title pl-4">Alimento</span>
+        <span className="card-product pl-4">{children}</span>
         <button className="button">
           <span className="button-text">${price}</span>
         </button>
