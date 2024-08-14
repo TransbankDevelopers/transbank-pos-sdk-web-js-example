@@ -133,17 +133,6 @@ const SalePage = () => {
             <div className="div3 border-t-blue flex justify-between">
               <div className="flex flex-col pos-field-container">
                 <span className="operation-title mb-6">Última venta</span>
-                <span className="text-light">Obtener voucher:</span>
-                <div className="flex gap-8">
-                  <label className="tbk-radio-label">
-                    <input type="radio" name="option" value={1} />
-                    Si
-                  </label>
-                  <label className="tbk-radio-label">
-                    <input type="radio" name="option" value={0} />
-                    No
-                  </label>
-                </div>
                 <Button
                   additionalClass="mt-auto"
                   height={40}
@@ -180,20 +169,7 @@ const SalePage = () => {
                 </Button>
               </div>
               <div className="flex flex-col pos-field-container">
-                <span className="operation-title mb-6">
-                  Detalle multicódigo
-                </span>
-                <span className="text-light">Imprimir en POS:</span>
-                <div className="flex gap-8">
-                  <label className="tbk-radio-label">
-                    <input type="radio" name="option" value={1} />
-                    Si
-                  </label>
-                  <label className="tbk-radio-label">
-                    <input type="radio" name="option" value={0} />
-                    No
-                  </label>
-                </div>
+                <span className="operation-title mb-6">Total de ventas</span>
                 <Button
                   additionalClass="mt-auto"
                   height={40}
@@ -202,7 +178,7 @@ const SalePage = () => {
                     console.log("click");
                   }}
                 >
-                  Detalle de venta
+                  Total ventas
                 </Button>
               </div>
             </div>
