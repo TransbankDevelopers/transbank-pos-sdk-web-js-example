@@ -5,38 +5,177 @@ import iceCreamImg from "../assets/ice-cream.png";
 import coffeeImg from "../assets/coffee.png";
 import Button, { ButtonType } from "../components/Button/Button";
 import Snippet from "../components/Snippet/Snippet";
+import { POS } from "transbank-pos-sdk-web";
+import { useEffect, useRef, useState } from "react";
 import "./SalePage.css";
 
 const SalePage = () => {
+  const salesDetailVoucherRef = useRef<HTMLInputElement>(null);
+  const saleAmountRef = useRef<HTMLInputElement>(null);
+  const multiCodeSaleAmountRef = useRef<HTMLInputElement>(null);
+  const commerceCodeRef = useRef<HTMLInputElement>(null);
+  const operationIdRef = useRef<HTMLInputElement>(null);
+  const [response, setResponse] = useState("");
+  const [posConnected, setPosConnected] = useState(false);
+  const [agentConnected, setAgentConnected] = useState(false);
+  const [intermediateMessage, setIntermediateMessage] = useState("");
+
+  useEffect(() => {
+    console.log("useEffect");
+    const handlePosConnected = async () => {
+      if (!(await POS.isConnected)) {
+        return;
+      }
+      setAgentConnected(true);
+      const status = await POS.getPortStatus();
+      setPosConnected(status.connected);
+    };
+    handlePosConnected();
+  }, []);
+
+  const normalSale = async () => {
+    const amount = saleAmountRef.current?.valueAsNumber;
+    if (amount === undefined || isNaN(amount)) {
+      return "Se requiere el monto para realizar la venta";
+    }
+    return await POS.doSale(amount, "ticket123", (status) => {
+      setIntermediateMessage(status.responseMessage);
+    });
+  };
+
+  const multiCodeSale = async () => {
+    const amount = multiCodeSaleAmountRef.current?.valueAsNumber;
+    const commerceCode = commerceCodeRef.current?.value;
+    if (amount === undefined || isNaN(amount) || commerceCode === "") {
+      return "Se requiere el monto y el código de comercio para realizar la venta";
+    }
+    return await POS.doMulticodeSale(
+      amount,
+      "ticket123",
+      commerceCode,
+      (status) => {
+        setIntermediateMessage(status.responseMessage);
+      }
+    );
+  };
+
+  const setNormalMode = async () => {
+    return await POS.setNormalMode();
+  };
+
+  const poll = async () => {
+    return await POS.poll();
+  };
+
+  const loadKeys = async () => {
+    return await POS.loadKeys();
+  };
+
+  const refund = async () => {
+    const operationId = operationIdRef.current?.value;
+    if (operationId === undefined || operationId === "") {
+      return "Se requiere el ID de operación";
+    }
+    return await POS.refund(operationId);
+  };
+
+  const lastSale = async () => {
+    return await POS.getLastSale();
+  };
+
+  const salesDetails = async () => {
+    const printOnPos = salesDetailVoucherRef.current?.checked;
+    return await POS.getDetails(printOnPos);
+  };
+
+  const totalSales = async () => {
+    return await POS.getTotals();
+  };
+
+  const errorWrapper = async (action: () => Promise<any>) => {
+    try {
+      const response = await action();
+      setResponse(JSON.stringify(response, null, 2));
+    } catch (error) {
+      if (typeof error === "string") {
+        setResponse(error);
+      }
+      console.log(error);
+    }
+    setIntermediateMessage("");
+  };
+
   return (
     <div className="sales-flex-container">
       <div className="status-bar">
         <p>
           <span className="tbk-bold">Estado de conexión con agente: </span>
-          Conectado
+          {agentConnected ? "Conectado" : "Sin conexión"}
         </p>
         <div className="flex">
           <p className="border-r-gray5">
             <span className="tbk-bold">Estado de punto de venta: </span>
-            Conectado al POS
+            {posConnected ? "Conectado al POS" : "POS Desconectado"}
           </p>
-          <p>
+          <p className="flex">
             <span className="tbk-bold">Estado de venta: </span>
+            <span className="w-60 text-left ml-1">{intermediateMessage}</span>
           </p>
         </div>
       </div>
       <div className="pos-container">
         <div className="product-container">
-          <ProductCard price={3990} imagePath={burgerImg}>
+          <ProductCard
+            price={3990}
+            imagePath={burgerImg}
+            handleClick={() => {
+              errorWrapper(async () => {
+                return await POS.doSale(3990, "ticket123", (status) => {
+                  setIntermediateMessage(status.responseMessage);
+                  console.log(status);
+                });
+              });
+            }}
+          >
             Hamburguesa
           </ProductCard>
-          <ProductCard price={1990} imagePath={friesImg}>
+          <ProductCard
+            price={1990}
+            imagePath={friesImg}
+            handleClick={() => {
+              errorWrapper(async () => {
+                return await POS.doSale(1990, "ticket123", (status) => {
+                  setIntermediateMessage(status.responseMessage);
+                });
+              });
+            }}
+          >
             Papas fritas
           </ProductCard>
-          <ProductCard price={1750} imagePath={iceCreamImg}>
+          <ProductCard
+            price={1750}
+            imagePath={iceCreamImg}
+            handleClick={() => {
+              errorWrapper(async () => {
+                return await POS.doSale(1750, "ticket123", (status) => {
+                  setIntermediateMessage(status.responseMessage);
+                });
+              });
+            }}
+          >
             Helado
           </ProductCard>
-          <ProductCard price={990} imagePath={coffeeImg}>
+          <ProductCard
+            price={990}
+            imagePath={coffeeImg}
+            handleClick={() => {
+              errorWrapper(async () => {
+                return await POS.doSale(990, "ticket123", (status) => {
+                  setIntermediateMessage(status.responseMessage);
+                });
+              });
+            }}
+          >
             Café Latte
           </ProductCard>
         </div>
@@ -50,7 +189,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    console.log("click");
+                    errorWrapper(setNormalMode);
                   }}
                 >
                   Modo normal
@@ -60,7 +199,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    console.log("click");
+                    errorWrapper(poll);
                   }}
                 >
                   Poll
@@ -70,7 +209,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    console.log("click");
+                    errorWrapper(loadKeys);
                   }}
                 >
                   Carga llaves
@@ -80,13 +219,19 @@ const SalePage = () => {
             <div className="div2 border-t-blue flex justify-between">
               <div className="flex flex-col pos-field-container">
                 <span className="operation-title mb-4">Venta normal</span>
-                <input className="pos-input" type="text" placeholder="Monto" />
+                <input
+                  className="pos-input"
+                  type="number"
+                  placeholder="Monto ($)"
+                  name="saleAmount"
+                  ref={saleAmountRef}
+                />
                 <Button
                   additionalClass="mt-auto mb-7"
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    console.log("click");
+                    errorWrapper(normalSale);
                   }}
                 >
                   Venta
@@ -94,18 +239,26 @@ const SalePage = () => {
               </div>
               <div className="flex flex-col pos-field-container">
                 <span className="operation-title mb-4">Venta multicódigo</span>
-                <input className="pos-input" type="text" placeholder="Monto" />
+                <input
+                  className="pos-input"
+                  type="number"
+                  placeholder="Monto ($)"
+                  name="multiCodeSaleAmount"
+                  ref={multiCodeSaleAmountRef}
+                />
                 <input
                   className="pos-input mt-4 mb-4"
-                  type="text"
+                  type="number"
                   placeholder="Cod. Comercio"
+                  name="multiCodeSaleCommerce"
+                  ref={commerceCodeRef}
                 />
                 <Button
                   additionalClass="mt-auto mb-7"
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    console.log("click");
+                    errorWrapper(multiCodeSale);
                   }}
                 >
                   Venta
@@ -117,13 +270,15 @@ const SalePage = () => {
                   className="pos-input"
                   type="text"
                   placeholder="ID Operación"
+                  name="operationId"
+                  ref={operationIdRef}
                 />
                 <Button
                   additionalClass="mt-auto mb-7"
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    console.log("click");
+                    errorWrapper(refund);
                   }}
                 >
                   Rembolsar
@@ -138,7 +293,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    console.log("click");
+                    errorWrapper(lastSale);
                   }}
                 >
                   Última venta
@@ -149,11 +304,15 @@ const SalePage = () => {
                 <span className="text-light">Imprimir en POS:</span>
                 <div className="flex gap-8">
                   <label className="tbk-radio-label">
-                    <input type="radio" name="option" value={1} />
+                    <input
+                      type="radio"
+                      name="detail"
+                      ref={salesDetailVoucherRef}
+                    />
                     Si
                   </label>
                   <label className="tbk-radio-label">
-                    <input type="radio" name="option" value={0} />
+                    <input type="radio" name="detail" defaultChecked={true} />
                     No
                   </label>
                 </div>
@@ -162,7 +321,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    console.log("click");
+                    errorWrapper(salesDetails);
                   }}
                 >
                   Detalle de venta
@@ -175,7 +334,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    console.log("click");
+                    errorWrapper(totalSales);
                   }}
                 >
                   Total ventas
@@ -184,7 +343,7 @@ const SalePage = () => {
             </div>
           </div>
           <div className="div4">
-            <Snippet code="{test: test}" />
+            <Snippet code={response} />
           </div>
         </div>
       </div>
