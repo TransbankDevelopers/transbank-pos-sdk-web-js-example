@@ -1,7 +1,7 @@
 import Connection from "../components/Connection/Connection";
-import "./MainConnection.css";
+import "./MainPage.css";
 
-export default function MainConnection() {
+export default function MainPage() {
   return (
     <section className="main">
       <section className="main-text">

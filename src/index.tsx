@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import MainConnection from "./pages/MainConnection";
+import MainPage from "./pages/MainPage";
 import SalePage from "./pages/SalePage";
 
 const root = ReactDOM.createRoot(
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      { path: "/", element: <MainConnection /> },
+      { path: "/", element: <MainPage /> },
       { path: "/sales", element: <SalePage /> },
     ],
   },
