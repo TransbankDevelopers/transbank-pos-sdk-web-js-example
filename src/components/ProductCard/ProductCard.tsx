@@ -5,10 +5,12 @@ interface ProductCardProps {
   imagePath: string;
   children: React.ReactNode;
   alt?: string;
+  handleClick: (amount: number) => void;
 }
 
 const ProductCard = (props: ProductCardProps) => {
-  const { price, imagePath, children, alt } = props;
+  const { price, imagePath, children, alt, handleClick } = props;
+  const onClick = () => {};
   return (
     <div className="card">
       <div className="product-img">
@@ -17,7 +19,12 @@ const ProductCard = (props: ProductCardProps) => {
       <div className="product-data">
         <span className="card-title pl-4">Alimento</span>
         <span className="card-product pl-4">{children}</span>
-        <button className="button">
+        <button
+          className="button"
+          onClick={() => {
+            handleClick(price);
+          }}
+        >
           <span className="button-text">${price}</span>
         </button>
       </div>
