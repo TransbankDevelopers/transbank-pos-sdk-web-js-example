@@ -13,7 +13,6 @@ type AlertStatus = {
 };
 
 export default function Connection() {
-  const handleSocketConnected = () => {};
   const alertSuccessStatus: AlertStatus = {
     alertType: AlertType.SUCCESS,
     alertMessage: "Agente conectado correctamente",
@@ -35,31 +34,29 @@ export default function Connection() {
   const [alertStatus, setAlertStatus] = useState(alertFailedStatus);
   const [agentConnected, setAgentConnected] = useState(false);
   const [ports, setPorts] = useState<{}[]>([]);
-  const [posConnected, setPosConnected] = useState(false);
   console.log(ports.length);
+
   const handleConnectAgent = async () => {
     setIsLoading(true);
     POS.on("socket_connected", () => {
-      console.log("Conectado a socket");
       setIsLoading(false);
       setShowAlert(true);
       setAlertStatus(alertSuccessStatus);
       setAgentConnected(true);
     });
+
     POS.on("socket_connection_failed", () => {
-      console.log("Error conectando con agente");
       setShowAlert(true);
       setAlertStatus(alertFailedStatus);
       setIsLoading(false);
     });
+
     POS.connect("http://localhost:8090", agentOptions);
   };
 
   const closePosConnection = async () => {
     const status = await POS.getPortStatus();
-    console.log(status);
     const close = await POS.closePort();
-    console.log(close);
   };
 
   const handleAlertClose = async () => {
@@ -69,12 +66,10 @@ export default function Connection() {
   const handleListPorts = async () => {
     const ports = await POS.getPorts();
     setPorts(ports);
-    console.log(ports);
   };
 
   const handleAutoConnect = async () => {
     const response = await POS.autoconnect();
-    console.log(response);
   };
 
   const handleOpenPort = async (port: string) => {
@@ -83,8 +78,6 @@ export default function Connection() {
       navigate("/sales");
     }
   };
-
-  console.log("agent? ", agentConnected);
 
   return (
     <section className="connection">
