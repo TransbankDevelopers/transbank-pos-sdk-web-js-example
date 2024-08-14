@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AgentConnectionOptions, POS } from "transbank-pos-sdk-web";
 import POSimg from "../../assets/POS.png";
 import Button, { ButtonType } from "../Button/Button";
@@ -28,6 +29,7 @@ export default function Connection() {
     reconnectionAttempts: 4,
   };
 
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertStatus, setAlertStatus] = useState(alertFailedStatus);
@@ -77,8 +79,9 @@ export default function Connection() {
 
   const handleOpenPort = async (port: string) => {
     const portOpen = await POS.openPort(port);
-    setPosConnected(portOpen);
-    console.log(portOpen);
+    if (portOpen) {
+      navigate("/sales");
+    }
   };
 
   console.log("agent? ", agentConnected);
