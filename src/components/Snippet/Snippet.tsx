@@ -8,9 +8,18 @@ export type SnippetProps = {
 const Snippet = (props: SnippetProps) => {
   return (
     <SyntaxHighlighter
-      customStyle={{ height: "100%", margin: "0" }}
+      customStyle={{
+        height: "100%",
+        margin: "0",
+        wordWrap: "break-word",
+        whiteSpace: "pre-wrap",
+        width: "100%",
+        overflowY: "auto",
+      }}
       style={oneDark}
       language={"JSON"}
+      wrapLongLines={true}
+      wrapLines={true}
     >
       {props.code}
     </SyntaxHighlighter>
