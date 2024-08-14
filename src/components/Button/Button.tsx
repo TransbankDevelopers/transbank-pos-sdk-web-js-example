@@ -29,7 +29,7 @@ export default function Button(props: ButtonProps) {
     additionalClass = "",
   } = props;
 
-  var buttonClassName = cx("tbk-button", {
+  let buttonClassName = cx("tbk-button", {
     white: type === ButtonType.WHITE,
     red: type === ButtonType.RED,
     pos: type === ButtonType.POS,
