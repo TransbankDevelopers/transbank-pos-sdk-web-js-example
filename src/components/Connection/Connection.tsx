@@ -60,12 +60,7 @@ export default function Connection() {
     await POS.connect("http://localhost:8090", agentOptions);
   };
 
-  const closePosConnection = async () => {
-    const status = await POS.getPortStatus();
-    const close = await POS.closePort();
-  };
-
-  const handleAlertClose = async () => {
+  const handleAlertClose = () => {
     setShowAlert(false);
   };
 
@@ -127,14 +122,6 @@ export default function Connection() {
                 DESCUBRIR Y CONECTAR
               </Button>
             </div>
-            <Button
-              handleClick={closePosConnection}
-              type={ButtonType.RED}
-              width={285}
-              height={50}
-            >
-              CERRAR COM POS
-            </Button>
             {ports.length > 0 && (
               <div className="flex flex-col">
                 <PortList onClick={handleOpenPort} ports={ports} />
