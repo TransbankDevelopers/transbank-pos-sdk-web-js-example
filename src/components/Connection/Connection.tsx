@@ -38,11 +38,16 @@ export default function Connection() {
 
   const handleConnectAgent = async () => {
     setIsLoading(true);
-    POS.on("socket_connected", () => {
-      setIsLoading(false);
-      setShowAlert(true);
-      setAlertStatus(alertSuccessStatus);
-      setAgentConnected(true);
+    POS.on("socket_connected", async () => {
+      const portStatus = await POS.getPortStatus();
+      if (portStatus.connected) {
+        navigate("/sales");
+      } else {
+        setIsLoading(false);
+        setShowAlert(true);
+        setAlertStatus(alertSuccessStatus);
+        setAgentConnected(true);
+      }
     });
 
     POS.on("socket_connection_failed", () => {
@@ -70,6 +75,9 @@ export default function Connection() {
 
   const handleAutoConnect = async () => {
     const response = await POS.autoconnect();
+    if (!response) {
+      navigate("/sales");
+    }
   };
 
   const handleOpenPort = async (port: string) => {
