@@ -56,7 +56,8 @@ export default function Connection() {
       setIsLoading(false);
     });
 
-    POS.connect("http://localhost:8090", agentOptions);
+    await POS.disconnect();
+    await POS.connect("http://localhost:8090", agentOptions);
   };
 
   const closePosConnection = async () => {
