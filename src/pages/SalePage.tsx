@@ -108,7 +108,7 @@ const SalePage = () => {
     return await POS.getTotals();
   };
 
-  const errorWrapper = async (action: () => Promise<any>) => {
+  const responseHandler = async (action: () => Promise<any>) => {
     try {
       const response = await action();
       setResponse(JSON.stringify(response, null, 2));
@@ -117,6 +117,7 @@ const SalePage = () => {
         setResponse(error);
       }
       console.log(error);
+      setResponse("Se ha producido un error al ejecutar la operación");
     }
     setIntermediateMessage("");
   };
@@ -145,7 +146,7 @@ const SalePage = () => {
             price={3990}
             imagePath={burgerImg}
             handleClick={() => {
-              errorWrapper(async () => {
+              responseHandler(async () => {
                 return await POS.doSale(3990, "ticket123", (status) => {
                   setIntermediateMessage(status.responseMessage);
                   console.log(status);
@@ -159,7 +160,7 @@ const SalePage = () => {
             price={1990}
             imagePath={friesImg}
             handleClick={() => {
-              errorWrapper(async () => {
+              responseHandler(async () => {
                 return await POS.doSale(1990, "ticket123", (status) => {
                   setIntermediateMessage(status.responseMessage);
                 });
@@ -172,7 +173,7 @@ const SalePage = () => {
             price={1750}
             imagePath={iceCreamImg}
             handleClick={() => {
-              errorWrapper(async () => {
+              responseHandler(async () => {
                 return await POS.doSale(1750, "ticket123", (status) => {
                   setIntermediateMessage(status.responseMessage);
                 });
@@ -185,7 +186,7 @@ const SalePage = () => {
             price={990}
             imagePath={coffeeImg}
             handleClick={() => {
-              errorWrapper(async () => {
+              responseHandler(async () => {
                 return await POS.doSale(990, "ticket123", (status) => {
                   setIntermediateMessage(status.responseMessage);
                 });
@@ -205,7 +206,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    errorWrapper(setNormalMode);
+                    responseHandler(setNormalMode);
                   }}
                 >
                   Modo normal
@@ -215,7 +216,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    errorWrapper(poll);
+                    responseHandler(poll);
                   }}
                 >
                   Poll
@@ -225,7 +226,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    errorWrapper(loadKeys);
+                    responseHandler(loadKeys);
                   }}
                 >
                   Carga llaves
@@ -247,7 +248,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    errorWrapper(normalSale);
+                    responseHandler(normalSale);
                   }}
                 >
                   Venta
@@ -274,7 +275,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    errorWrapper(multiCodeSale);
+                    responseHandler(multiCodeSale);
                   }}
                 >
                   Venta
@@ -294,7 +295,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    errorWrapper(refund);
+                    responseHandler(refund);
                   }}
                 >
                   Rembolsar
@@ -309,7 +310,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    errorWrapper(lastSale);
+                    responseHandler(lastSale);
                   }}
                 >
                   Última venta
@@ -337,7 +338,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    errorWrapper(salesDetails);
+                    responseHandler(salesDetails);
                   }}
                 >
                   Detalle de venta
@@ -350,7 +351,7 @@ const SalePage = () => {
                   height={40}
                   type={ButtonType.POS}
                   handleClick={() => {
-                    errorWrapper(totalSales);
+                    responseHandler(totalSales);
                   }}
                 >
                   Total ventas
