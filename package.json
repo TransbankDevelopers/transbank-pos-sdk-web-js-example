@@ -16,7 +16,7 @@
     "react-router-dom": "^6.26.0",
     "react-scripts": "5.0.1",
     "react-syntax-highlighter": "^15.5.0",
-    "transbank-pos-sdk-web": "file:../../../prueba/transbank-pos-sdk-web-js",
+    "transbank-pos-sdk-web": "github:TransbankDevelopers/transbank-pos-sdk-web-js#develop",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
