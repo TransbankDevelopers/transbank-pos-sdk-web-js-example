@@ -7,9 +7,11 @@ import Button, { ButtonType } from "../components/Button/Button";
 import Snippet from "../components/Snippet/Snippet";
 import { POS } from "transbank-pos-sdk-web";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./SalePage.css";
 
 const SalePage = () => {
+  const navigate = useNavigate();
   const salesDetailVoucherRef = useRef<HTMLInputElement>(null);
   const saleAmountRef = useRef<HTMLInputElement>(null);
   const multiCodeSaleAmountRef = useRef<HTMLInputElement>(null);
@@ -21,16 +23,30 @@ const SalePage = () => {
   const [intermediateMessage, setIntermediateMessage] = useState("");
 
   useEffect(() => {
-    console.log("useEffect");
-    const handlePosConnected = async () => {
-      if (!(await POS.isConnected)) {
+    const handleAgentDisconnected = () => {
+      setAgentConnected(false);
+      navigate("/");
+    };
+
+    const handlePosDisconnected = () => setPosConnected(false);
+
+    const checkInitialConnection = async () => {
+      if (!POS.isConnected) {
         return;
       }
       setAgentConnected(true);
       const status = await POS.getPortStatus();
       setPosConnected(status.connected);
     };
-    handlePosConnected();
+
+    POS.on("socket_disconnected", handleAgentDisconnected);
+    POS.on("port_closed", handlePosDisconnected);
+    checkInitialConnection();
+
+    return () => {
+      POS.off("socket_disconnected", handleAgentDisconnected);
+      POS.off("port_closed", handlePosDisconnected);
+    };
   }, []);
 
   const normalSale = async () => {
