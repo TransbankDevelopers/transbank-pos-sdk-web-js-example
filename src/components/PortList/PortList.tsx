@@ -1,23 +1,24 @@
+import Button, { ButtonType } from "../Button/Button";
 import "./PortList";
 
 interface Port {
   path: string;
 }
 
+//TODO: implement props definition
 const PortList = (props: any) => {
-  console.log("port list");
   const { ports, onClick } = props;
   const portItems = ports.map((port: Port, index: number) => (
-    <button
-      key={index}
-      onClick={() => {
-        console.log("Clicked", port.path);
+    <Button
+      additionalClass="mb-1"
+      key={port.path}
+      type={ButtonType.WHITE}
+      handleClick={() => {
         onClick(port.path);
       }}
-      className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
     >
-      {port.path}
-    </button>
+      <span className="font-bold">CONECTAR:</span> {port.path}
+    </Button>
   ));
   return portItems;
 };
