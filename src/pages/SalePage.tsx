@@ -115,9 +115,10 @@ const SalePage = () => {
     } catch (error) {
       if (typeof error === "string") {
         setResponse(error);
+      } else {
+        console.log(error);
+        setResponse("Se ha producido un error al ejecutar la operación");
       }
-      console.log(error);
-      setResponse("Se ha producido un error al ejecutar la operación");
     }
     setIntermediateMessage("");
   };
