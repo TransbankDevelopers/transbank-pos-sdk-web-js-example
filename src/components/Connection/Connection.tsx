@@ -10,6 +10,8 @@ import PortList from "../PortList/PortList";
 type AlertStatus = {
   alertType: AlertType;
   alertMessage: string;
+  showButton?: boolean;
+  alertTitle?: string;
 };
 
 export default function Connection() {
@@ -22,23 +24,28 @@ export default function Connection() {
     alertType: AlertType.FAILED,
     alertMessage:
       "No se pudo conectar con el agente Transbank POS. Verifica que se haya inicializado el agente en este equipo.",
+    showButton: true,
   };
+
+  const [alertStatus, setAlertStatus] = useState(alertFailedStatus);
 
   const agentOptions: AgentConnectionOptions = {
     reconnectionAttempts: 4,
   };
 
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertStatus, setAlertStatus] = useState(alertFailedStatus);
-  const [agentConnected, setAgentConnected] = useState(false);
-  const [ports, setPorts] = useState<{}[]>([]);
-  console.log(ports.length);
+  const setPosAlert = (errorMessage: string) => {
+    const posAlert: AlertStatus = {
+      alertType: AlertType.FAILED,
+      alertMessage: errorMessage,
+      showButton: false,
+      alertTitle: "Error en conexión con POS",
+    };
+    setShowAlert(true);
+    setAlertStatus(posAlert);
+  };
 
-  const handleConnectAgent = async () => {
-    setIsLoading(true);
-    POS.on("socket_connected", async () => {
+  const handleSocketConnected = async () => {
+    try {
       const portStatus = await POS.getPortStatus();
       if (portStatus.connected) {
         navigate("/sales");
@@ -48,13 +55,29 @@ export default function Connection() {
         setAlertStatus(alertSuccessStatus);
         setAgentConnected(true);
       }
-    });
+    } catch (error) {
+      console.log(error);
+      setPosAlert("Error obteniendo estado de puertos");
+    }
+  };
 
-    POS.on("socket_connection_failed", () => {
-      setShowAlert(true);
-      setAlertStatus(alertFailedStatus);
-      setIsLoading(false);
-    });
+  const handleSocketConnectionFailed = () => {
+    setShowAlert(true);
+    setAlertStatus(alertFailedStatus);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    return () => {
+      POS.off("socket_connected", handleSocketConnected);
+      POS.off("socket_connection_failed", handleSocketConnectionFailed);
+    };
+  }, []);
+
+  const handleConnectAgent = async () => {
+    setIsLoading(true);
+    POS.on("socket_connected", handleSocketConnected);
+    POS.on("socket_connection_failed", handleSocketConnectionFailed);
 
     await POS.disconnect();
     await POS.connect("http://localhost:8090", agentOptions);
@@ -65,28 +88,47 @@ export default function Connection() {
   };
 
   const handleListPorts = async () => {
-    const ports = await POS.getPorts();
-    setPorts(ports);
+    try {
+      const ports = await POS.getPorts();
+      setPorts(ports);
+    } catch (error) {
+      console.log(error);
+      setPosAlert("Error listando puertos");
+    }
   };
 
   const handleAutoConnect = async () => {
-    const response = await POS.autoconnect();
-    if (!response) {
-      navigate("/sales");
+    try {
+      const portConnected = await POS.autoconnect();
+      if (portConnected) {
+        navigate("/sales");
+      }
+    } catch (error) {
+      console.log(error);
+      setPosAlert("Error en autoconnect");
     }
   };
 
   const handleOpenPort = async (port: string) => {
-    const portOpen = await POS.openPort(port);
-    if (portOpen) {
-      navigate("/sales");
+    try {
+      const portOpen = await POS.openPort(port);
+      if (portOpen) {
+        navigate("/sales");
+      }
+    } catch (error) {
+      console.log(error);
+      setPosAlert("Error abriendo puerto");
     }
   };
 
   return (
     <section className="connection">
       {showAlert && (
-        <Alert onClose={handleAlertClose} type={alertStatus.alertType}>
+        <Alert
+          onClose={() => setShowAlert(false)}
+          type={alertStatus.alertType}
+          title={alertStatus.alertTitle}
+        >
           {alertStatus.alertMessage}
         </Alert>
       )}
