@@ -37,3 +37,8 @@
   text-align: start;
   padding: 20px 0px 20px 0px;
 }
+
+p a {
+  color: var(--tbk-link);
+  text-decoration: underline;
+}
