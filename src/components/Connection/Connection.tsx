@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AgentConnectionOptions, POS } from "transbank-pos-sdk-web";
 import POSimg from "../../assets/POS.png";
@@ -15,6 +15,11 @@ type AlertStatus = {
 };
 
 export default function Connection() {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [agentConnected, setAgentConnected] = useState(false);
+  const [ports, setPorts] = useState<{}[]>([]);
   const alertSuccessStatus: AlertStatus = {
     alertType: AlertType.SUCCESS,
     alertMessage: "Agente conectado correctamente",
@@ -81,10 +86,6 @@ export default function Connection() {
 
     await POS.disconnect();
     await POS.connect("http://localhost:8090", agentOptions);
-  };
-
-  const handleAlertClose = () => {
-    setShowAlert(false);
   };
 
   const handleListPorts = async () => {
