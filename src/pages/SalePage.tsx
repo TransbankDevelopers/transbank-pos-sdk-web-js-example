@@ -108,6 +108,22 @@ const SalePage = () => {
     return await POS.getTotals();
   };
 
+  const closePort = async () => {
+    try {
+      const close = await POS.closePort();
+      console.log("close port: ", close);
+      if (close) {
+        setPosConnected(false);
+        navigate("/");
+      }
+    } catch (error) {
+      console.log("Error desconectando POS: ", error);
+      if (typeof error === "string") {
+        setResponse(error);
+      }
+    }
+  };
+
   const responseHandler = async (action: () => Promise<any>) => {
     try {
       const response = await action();
@@ -130,6 +146,14 @@ const SalePage = () => {
           <span className="tbk-bold">Estado de conexión con agente: </span>
           {agentConnected ? "Conectado" : "Sin conexión"}
         </p>
+        <button
+          className="bg-slate-200 rounded px-2 h-10 self-center ml-auto cursor-pointer"
+          onClick={() => {
+            responseHandler(closePort);
+          }}
+        >
+          Desconectar
+        </button>
         <div className="flex">
           <p className="border-r-gray5">
             <span className="tbk-bold">Estado de punto de venta: </span>
