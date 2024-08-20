@@ -176,11 +176,11 @@ export default function Connection() {
               <p>
                 Lleva a cabo pruebas prácticas para lograr una conexión sin
                 inconvenientes con el POS. Asegúrate de instalar el agente POS
-                correspondiente,
+                correspondiente,&nbsp;
                 <a href="https://github.com/TransbankDevelopers/transbank-pos-sdk-web-agent/releases">
                   disponible aquí
                 </a>
-                para que el sistema pueda reconocer tu POS.
+                &nbsp;para que el sistema pueda reconocer tu POS.
               </p>
             </div>
 
