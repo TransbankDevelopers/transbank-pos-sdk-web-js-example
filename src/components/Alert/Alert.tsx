@@ -10,10 +10,18 @@ interface AlertProps {
   children: ReactNode;
   type: AlertType;
   onClose: () => void;
+  showButton?: boolean;
+  title?: string;
 }
 
 export default function Alert(props: AlertProps) {
-  const { type, children, onClose } = props;
+  const {
+    type,
+    children,
+    onClose,
+    title = "Conexión con agente",
+    showButton,
+  } = props;
   const handleButtonClick = async () => {
     window.location.href =
       "https://github.com/TransbankDevelopers/transbank-pos-sdk-web-agent/releases";
@@ -44,10 +52,10 @@ export default function Alert(props: AlertProps) {
         />
       </svg>
       <div className="alert-text">
-        <strong className="text-lg">Conexión con agente</strong>
+        <strong className="text-lg">{title}</strong>
         <span className="text-sm">{children}</span>
       </div>
-      {!isSuccessAlert && (
+      {showButton && (
         <button onClick={handleButtonClick} className="alert-btn">
           <span className="btn-text">Descargar agente</span>
         </button>
