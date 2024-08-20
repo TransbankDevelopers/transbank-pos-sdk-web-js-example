@@ -10,7 +10,6 @@ interface ProductCardProps {
 
 const ProductCard = (props: ProductCardProps) => {
   const { price, imagePath, children, alt, handleClick } = props;
-  const onClick = () => {};
   return (
     <div className="card">
       <div className="product-img">
