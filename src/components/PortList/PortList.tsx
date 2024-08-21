@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button, { ButtonType } from "../Button/Button";
 import "./PortList";
 
@@ -8,19 +9,36 @@ interface Port {
 //TODO: implement props definition
 const PortList = (props: any) => {
   const { ports, onClick } = props;
-  const portItems = ports.map((port: Port, index: number) => (
-    <Button
-      additionalClass="mb-1"
-      key={port.path}
-      type={ButtonType.WHITE}
-      handleClick={() => {
-        onClick(port.path);
-      }}
-    >
-      <span className="font-bold">CONECTAR:</span> {port.path}
-    </Button>
-  ));
-  return portItems;
+  const [selectedPort, setSelectedPort] = useState("");
+  return (
+    <>
+      <span className="font-bold mr-auto mb-5 text-xl">
+        Puertos Disponibles
+      </span>
+      <div className="flex flex-col ml-1 mb-3 gap-1">
+        {ports.map((port: Port, index: number) => (
+          <label className="flex gap-1" key={port.path}>
+            <input
+              type="radio"
+              name="port"
+              defaultChecked={index == 0}
+              onClick={() => setSelectedPort(port.path)}
+            />
+            {port.path}
+          </label>
+        ))}
+      </div>
+      <Button
+        width={200}
+        type={ButtonType.WHITE}
+        handleClick={() => {
+          onClick(selectedPort);
+        }}
+      >
+        <span className="font-bold">CONECTAR</span>
+      </Button>
+    </>
+  );
 };
 
 export default PortList;
