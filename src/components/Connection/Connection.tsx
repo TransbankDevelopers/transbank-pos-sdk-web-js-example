@@ -135,6 +135,7 @@ export default function Connection() {
           onClose={() => setShowAlert(false)}
           type={alertStatus.alertType}
           title={alertStatus.alertTitle}
+          showButton={alertStatus.showButton}
         >
           {alertStatus.alertMessage}
         </Alert>
