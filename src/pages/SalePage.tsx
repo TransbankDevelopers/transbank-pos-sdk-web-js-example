@@ -144,24 +144,37 @@ const SalePage = () => {
       <div className="status-bar">
         <p>
           <span className="tbk-bold">Estado de conexión con agente: </span>
-          {agentConnected ? "Conectado" : "Sin conexión"}
+          {agentConnected ? (
+            <span className="ml-1 text-emerald-500 bg-emerald-100 rounded-2xl px-4 py-1 border border-emerald-500 font-bold">
+              Conectado
+            </span>
+          ) : (
+            <span className="ml-1 text-red-500 bg-red-100 rounded-2xl px-4 py-1 border border-red-500 font-bold">
+              Desconectado
+            </span>
+          )}
         </p>
         <button
-          className="bg-slate-200 rounded px-2 h-10 self-center ml-auto cursor-pointer"
+          className="bg-slate-200 rounded px-2 h-10 self-center ml-auto cursor-pointer border border-slate-300"
           onClick={() => {
             responseHandler(closePort);
           }}
+          hidden={!posConnected}
         >
-          Desconectar
+          Desconectar POS
         </button>
         <div className="flex">
-          <p className="border-r-gray5">
+          <p>
             <span className="tbk-bold">Estado de punto de venta: </span>
-            {posConnected ? "Conectado al POS" : "POS Desconectado"}
-          </p>
-          <p className="flex">
-            <span className="tbk-bold">Estado de venta: </span>
-            <span className="w-60 text-left ml-1">{intermediateMessage}</span>
+            {posConnected ? (
+              <span className="ml-1 text-emerald-500 bg-emerald-100 rounded-2xl px-4 py-1 border border-emerald-500 font-bold">
+                POS Conectado
+              </span>
+            ) : (
+              <span className="ml-1 text-red-500 bg-red-100 rounded-2xl px-4 py-1 border border-red-500 font-bold">
+                POS Desconectado
+              </span>
+            )}
           </p>
         </div>
       </div>
