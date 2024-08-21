@@ -173,7 +173,7 @@ export default function Connection() {
               </Button>
             </div>
             {ports.length > 0 && (
-              <div className="flex flex-col">
+              <div className="flex flex-col mt-5">
                 <PortList onClick={handleOpenPort} ports={ports} />
               </div>
             )}
