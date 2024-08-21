@@ -75,7 +75,6 @@ export default function Connection() {
   useEffect(() => {
     const isAgentConnected = POS.isConnected;
     if (isAgentConnected) {
-      console.log("Agente esta conectado");
       setAgentConnected(true);
     }
 
