@@ -357,7 +357,7 @@ const SalePage = () => {
               <div className="flex flex-col pos-field-container">
                 <span className="operation-title mb-6">Detalle venta</span>
                 <span className="text-light">Imprimir en POS:</span>
-                <div className="flex gap-8">
+                <div className="ml-1 flex gap-8">
                   <label className="tbk-radio-label">
                     <input
                       type="radio"
