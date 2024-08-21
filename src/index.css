@@ -60,6 +60,7 @@ code {
   --tbk-success-1: #e8fcee;
   --tbk-success-2: #0a9285;
   --tbk-success-3: #7aefb6;
+  --tbk-success-4: #1abc9c;
 }
 .border-t-gray3 {
   border-top: 1px solid var(--tbk-grey-3);
