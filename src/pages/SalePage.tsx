@@ -398,6 +398,10 @@ const SalePage = () => {
             </div>
           </div>
           <div className="div4">
+            <p className="flex my-2 ml-3">
+              <span className="tbk-bold">Estado de venta: </span>
+              <span className="w-60 text-left ml-1">{intermediateMessage}</span>
+            </p>
             <Snippet code={response} />
           </div>
         </div>
