@@ -9,7 +9,7 @@ interface Port {
 //TODO: implement props definition
 const PortList = (props: any) => {
   const { ports, onClick } = props;
-  const [selectedPort, setSelectedPort] = useState("");
+  const [selectedPort, setSelectedPort] = useState(ports[0]);
   return (
     <>
       <span className="font-bold mr-auto mb-5 text-xl">
