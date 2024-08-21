@@ -17,7 +17,7 @@ const PortList = (props: any) => {
       </span>
       <div className="flex flex-col ml-1 mb-3 gap-1">
         {ports.map((port: Port, index: number) => (
-          <label className="flex gap-1" key={port.path}>
+          <label className="flex gap-2" key={port.path}>
             <input
               type="radio"
               name="port"
