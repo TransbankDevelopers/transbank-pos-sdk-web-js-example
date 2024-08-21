@@ -64,6 +64,26 @@
   background-color: var(--tbk-grey-6);
 }
 
+.connection-status {
+  margin-left: 4px;
+  border-radius: 16px;
+  border-width: 1px;
+  font-weight: 700;
+  padding: 4px 16px 4px 16px;
+}
+
+.status-connected {
+  color: var(--tbk-success-4);
+  background-color: var(--tbk-success-1);
+  border-color: var(--tbk-success-3);
+}
+
+.status-disconnected {
+  border-color: var(--tbk-danger-1);
+  color: var(--tbk-danger-3);
+  background-color: var(--tbk-danger-2);
+}
+
 .result {
   display: flex;
   flex-direction: column;

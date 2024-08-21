@@ -145,11 +145,11 @@ const SalePage = () => {
         <p>
           <span className="font-medium">Estado de conexión con agente: </span>
           {agentConnected ? (
-            <span className="ml-1 text-emerald-500 bg-emerald-100 rounded-2xl px-4 py-1 border border-emerald-500 font-bold">
+            <span className="connection-status status-connected">
               Conectado
             </span>
           ) : (
-            <span className="ml-1 text-red-500 bg-red-100 rounded-2xl px-4 py-1 border border-red-500 font-bold">
+            <span className="connection-status status-disconnected">
               Desconectado
             </span>
           )}
@@ -167,11 +167,11 @@ const SalePage = () => {
           <p>
             <span className="font-medium">Estado de punto de venta: </span>
             {posConnected ? (
-              <span className="ml-1 text-emerald-500 bg-emerald-100 rounded-2xl px-4 py-1 border border-emerald-500 font-bold">
+              <span className="connection-status status-connected">
                 POS Conectado
               </span>
             ) : (
-              <span className="ml-1 text-red-500 bg-red-100 rounded-2xl px-4 py-1 border border-red-500 font-bold">
+              <span className="connection-status status-disconnected">
                 POS Desconectado
               </span>
             )}
