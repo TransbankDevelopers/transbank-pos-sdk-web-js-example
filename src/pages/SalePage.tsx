@@ -143,7 +143,7 @@ const SalePage = () => {
     <div className="sales-flex-container">
       <div className="status-bar">
         <p>
-          <span className="tbk-bold">Estado de conexión con agente: </span>
+          <span className="font-medium">Estado de conexión con agente: </span>
           {agentConnected ? (
             <span className="ml-1 text-emerald-500 bg-emerald-100 rounded-2xl px-4 py-1 border border-emerald-500 font-bold">
               Conectado
@@ -165,7 +165,7 @@ const SalePage = () => {
         </button>
         <div className="flex">
           <p>
-            <span className="tbk-bold">Estado de punto de venta: </span>
+            <span className="font-medium">Estado de punto de venta: </span>
             {posConnected ? (
               <span className="ml-1 text-emerald-500 bg-emerald-100 rounded-2xl px-4 py-1 border border-emerald-500 font-bold">
                 POS Conectado
@@ -235,10 +235,10 @@ const SalePage = () => {
           </ProductCard>
         </div>
         <div className="operations-container">
-          <div className="flex flex-col">
-            <div className="div1">
+          <div className="buttons-container flex flex-col">
+            <div className="flex flex-col gap-4 mb-4">
               <p className="text-light bg-grey p-2">Operaciones</p>
-              <div className="button-container">
+              <div className="flex justify-between">
                 <Button
                   width={148}
                   height={40}
@@ -271,7 +271,7 @@ const SalePage = () => {
                 </Button>
               </div>
             </div>
-            <div className="div2 border-t-blue flex justify-between">
+            <div className="border-t-blue flex justify-between">
               <div className="flex flex-col pos-field-container">
                 <span className="operation-title mb-4">Venta normal</span>
                 <input
@@ -340,7 +340,7 @@ const SalePage = () => {
                 </Button>
               </div>
             </div>
-            <div className="div3 border-t-blue flex justify-between">
+            <div className="border-t-blue flex justify-between">
               <div className="flex flex-col pos-field-container">
                 <span className="operation-title mb-6">Última venta</span>
                 <Button
@@ -397,9 +397,9 @@ const SalePage = () => {
               </div>
             </div>
           </div>
-          <div className="div4">
+          <div className="result">
             <p className="flex my-2 ml-3">
-              <span className="tbk-bold">Estado de venta: </span>
+              <span className="font-medium">Estado de venta: </span>
               <span className="w-60 text-left ml-1">{intermediateMessage}</span>
             </p>
             <Snippet code={response} />
