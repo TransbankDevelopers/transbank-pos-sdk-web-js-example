@@ -21,7 +21,7 @@
 .card-title {
   color: var(--tbk-grey-5);
   font-feature-settings: "liga" off, "clig" off;
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -33,7 +33,7 @@
   text-align: left;
   color: var(--tbk-black-2);
   font-feature-settings: "liga" off, "clig" off;
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
@@ -52,7 +52,7 @@
 .button-text {
   color: #fff;
   text-align: center;
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
