@@ -18,7 +18,7 @@ interface ButtonProps {
   additionalClass?: string;
 }
 
-export default function Button(props: ButtonProps) {
+export default function Button(props: Readonly<ButtonProps>) {
   const {
     width,
     height,

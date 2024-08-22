@@ -14,7 +14,7 @@ interface AlertProps {
   title?: string;
 }
 
-export default function Alert(props: AlertProps) {
+export default function Alert(props: Readonly<AlertProps>) {
   const {
     type,
     children,

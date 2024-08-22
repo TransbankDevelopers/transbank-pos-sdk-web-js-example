@@ -8,7 +8,7 @@ interface ProductCardProps {
   handleClick: (amount: number) => void;
 }
 
-const ProductCard = (props: ProductCardProps) => {
+const ProductCard = (props: Readonly<ProductCardProps>) => {
   const { price, imagePath, children, alt, handleClick } = props;
   return (
     <div className="card">
