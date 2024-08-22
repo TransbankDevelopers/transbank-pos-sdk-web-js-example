@@ -20,7 +20,7 @@ export default function Alert(props: AlertProps) {
     children,
     onClose,
     title = "Conexión con agente",
-    showButton,
+    showButton = false,
   } = props;
   const handleButtonClick = async () => {
     window.location.href =

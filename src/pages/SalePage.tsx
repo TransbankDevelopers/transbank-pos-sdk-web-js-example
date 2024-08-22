@@ -143,25 +143,38 @@ const SalePage = () => {
     <div className="sales-flex-container">
       <div className="status-bar">
         <p>
-          <span className="tbk-bold">Estado de conexión con agente: </span>
-          {agentConnected ? "Conectado" : "Sin conexión"}
+          <span className="font-medium">Estado de conexión con agente: </span>
+          {agentConnected ? (
+            <span className="connection-status status-connected">
+              Conectado
+            </span>
+          ) : (
+            <span className="connection-status status-disconnected">
+              Desconectado
+            </span>
+          )}
         </p>
         <button
-          className="bg-slate-200 rounded px-2 h-10 self-center ml-auto cursor-pointer"
+          className="bg-slate-200 rounded px-2 h-10 self-center ml-auto cursor-pointer border border-slate-300"
           onClick={() => {
             responseHandler(closePort);
           }}
+          hidden={!posConnected}
         >
-          Desconectar
+          Desconectar POS
         </button>
         <div className="flex">
-          <p className="border-r-gray5">
-            <span className="tbk-bold">Estado de punto de venta: </span>
-            {posConnected ? "Conectado al POS" : "POS Desconectado"}
-          </p>
-          <p className="flex">
-            <span className="tbk-bold">Estado de venta: </span>
-            <span className="w-60 text-left ml-1">{intermediateMessage}</span>
+          <p>
+            <span className="font-medium">Estado de punto de venta: </span>
+            {posConnected ? (
+              <span className="connection-status status-connected">
+                POS Conectado
+              </span>
+            ) : (
+              <span className="connection-status status-disconnected">
+                POS Desconectado
+              </span>
+            )}
           </p>
         </div>
       </div>
@@ -222,10 +235,10 @@ const SalePage = () => {
           </ProductCard>
         </div>
         <div className="operations-container">
-          <div className="flex flex-col">
-            <div className="div1">
+          <div className="buttons-container flex flex-col">
+            <div className="flex flex-col gap-4 mb-4">
               <p className="text-light bg-grey p-2">Operaciones</p>
-              <div className="button-container">
+              <div className="flex justify-between">
                 <Button
                   width={148}
                   height={40}
@@ -258,7 +271,7 @@ const SalePage = () => {
                 </Button>
               </div>
             </div>
-            <div className="div2 border-t-blue flex justify-between">
+            <div className="border-t-blue flex justify-between">
               <div className="flex flex-col pos-field-container">
                 <span className="operation-title mb-4">Venta normal</span>
                 <input
@@ -327,7 +340,7 @@ const SalePage = () => {
                 </Button>
               </div>
             </div>
-            <div className="div3 border-t-blue flex justify-between">
+            <div className="border-t-blue flex justify-between">
               <div className="flex flex-col pos-field-container">
                 <span className="operation-title mb-6">Última venta</span>
                 <Button
@@ -344,7 +357,7 @@ const SalePage = () => {
               <div className="flex flex-col pos-field-container">
                 <span className="operation-title mb-6">Detalle venta</span>
                 <span className="text-light">Imprimir en POS:</span>
-                <div className="flex gap-8">
+                <div className="ml-1 flex gap-8">
                   <label className="tbk-radio-label">
                     <input
                       type="radio"
@@ -384,7 +397,11 @@ const SalePage = () => {
               </div>
             </div>
           </div>
-          <div className="div4">
+          <div className="result">
+            <p className="flex my-2 ml-3">
+              <span className="font-medium">Estado de venta: </span>
+              <span className="w-60 text-left ml-1">{intermediateMessage}</span>
+            </p>
             <Snippet code={response} />
           </div>
         </div>

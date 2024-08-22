@@ -73,6 +73,11 @@ export default function Connection() {
   };
 
   useEffect(() => {
+    const isAgentConnected = POS.isConnected;
+    if (isAgentConnected) {
+      setAgentConnected(true);
+    }
+
     return () => {
       POS.off("socket_connected", handleSocketConnected);
       POS.off("socket_connection_failed", handleSocketConnectionFailed);
@@ -129,6 +134,7 @@ export default function Connection() {
           onClose={() => setShowAlert(false)}
           type={alertStatus.alertType}
           title={alertStatus.alertTitle}
+          showButton={alertStatus.showButton}
         >
           {alertStatus.alertMessage}
         </Alert>
@@ -166,7 +172,7 @@ export default function Connection() {
               </Button>
             </div>
             {ports.length > 0 && (
-              <div className="flex flex-col">
+              <div className="flex flex-col mt-5">
                 <PortList onClick={handleOpenPort} ports={ports} />
               </div>
             )}

@@ -17,7 +17,7 @@ const Snippet = (props: SnippetProps) => {
         overflowY: "auto",
       }}
       style={oneDark}
-      language={"JSON"}
+      language={"json"}
       wrapLongLines={true}
       wrapLines={true}
     >
