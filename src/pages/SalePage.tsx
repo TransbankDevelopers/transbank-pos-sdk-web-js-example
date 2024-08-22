@@ -364,10 +364,12 @@ const SalePage = () => {
                       name="detail"
                       ref={salesDetailVoucherRef}
                     />
+                    {/* */}
                     Si
                   </label>
                   <label className="tbk-radio-label">
                     <input type="radio" name="detail" defaultChecked={true} />
+                    {/* */}
                     No
                   </label>
                 </div>

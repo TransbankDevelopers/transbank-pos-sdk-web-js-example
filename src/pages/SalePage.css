@@ -51,7 +51,7 @@
 
 .text-light {
   text-align: left;
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -94,7 +94,7 @@
 
 .operation-title {
   text-align: left;
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -116,7 +116,7 @@
 
 .tbk-radio-label {
   color: var(--tbk-grey-2);
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
