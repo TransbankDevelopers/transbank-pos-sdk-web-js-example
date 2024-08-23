@@ -126,6 +126,7 @@ const SalePage = () => {
 
   const responseHandler = async (action: () => Promise<any>) => {
     try {
+      setResponse("Esperando respuesta de POS...");
       const response = await action();
       setResponse(JSON.stringify(response, null, 2));
     } catch (error) {
