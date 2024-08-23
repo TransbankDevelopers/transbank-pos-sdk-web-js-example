@@ -108,6 +108,10 @@ export default function Connection() {
       const portConnected = await POS.autoconnect();
       if (portConnected) {
         navigate("/sales");
+      } else {
+        setPosAlert(
+          "No ha sido posible establecer comunicación con un POS. Por favor verifica que el POS se encuentre conectado y que esté configurado en modo integrado."
+        );
       }
     } catch (error) {
       console.log(error);
@@ -123,7 +127,7 @@ export default function Connection() {
       }
     } catch (error) {
       console.log(error);
-      setPosAlert("Error abriendo puerto");
+      setPosAlert("No ha sido posible abrir el puerto seleccionado: " + port);
     }
   };
 
