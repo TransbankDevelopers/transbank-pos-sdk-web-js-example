@@ -21,7 +21,7 @@ const PortList = (props: any) => {
             <input
               type="radio"
               name="port"
-              defaultChecked={index == 0}
+              defaultChecked={index === 0}
               onClick={() => setSelectedPort(port.path)}
             />
             {port.path}
