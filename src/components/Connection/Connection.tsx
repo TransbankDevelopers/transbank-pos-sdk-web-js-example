@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { AgentConnectionOptions, POS } from "transbank-pos-sdk-web";
 import POSimg from "../../assets/POS.png";
@@ -14,23 +14,24 @@ type AlertStatus = {
   alertTitle?: string;
 };
 
+const alertSuccessStatus: AlertStatus = {
+  alertType: AlertType.SUCCESS,
+  alertMessage: "Agente conectado correctamente",
+};
+
+const alertFailedStatus: AlertStatus = {
+  alertType: AlertType.FAILED,
+  alertMessage:
+    "No se pudo conectar con el agente Transbank POS. Verifica que se haya inicializado el agente en este equipo.",
+  showButton: true,
+};
+
 export default function Connection() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [agentConnected, setAgentConnected] = useState(false);
   const [ports, setPorts] = useState<{}[]>([]);
-  const alertSuccessStatus = useMemo<AlertStatus>(() => ({
-    alertType: AlertType.SUCCESS,
-    alertMessage: "Agente conectado correctamente",
-  }), []);
-
-  const alertFailedStatus = useMemo<AlertStatus>(() => ({
-    alertType: AlertType.FAILED,
-    alertMessage:
-      "No se pudo conectar con el agente Transbank POS. Verifica que se haya inicializado el agente en este equipo.",
-    showButton: true,
-  }), []);
 
   const [alertStatus, setAlertStatus] = useState(alertFailedStatus);
 
@@ -64,13 +65,13 @@ export default function Connection() {
       console.log(error);
       setPosAlert("Error obteniendo estado de puertos");
     }
-  }, [navigate, alertSuccessStatus]);
+  }, [navigate]);
 
   const handleSocketConnectionFailed = useCallback(() => {
     setShowAlert(true);
     setAlertStatus(alertFailedStatus);
     setIsLoading(false);
-  }, [alertFailedStatus]);
+  }, []);
 
   useEffect(() => {
     const isAgentConnected = POS.isConnected;
