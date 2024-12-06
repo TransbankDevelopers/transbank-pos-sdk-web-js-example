@@ -47,7 +47,7 @@ const SalePage = () => {
       POS.off("socket_disconnected", handleAgentDisconnected);
       POS.off("port_closed", handlePosDisconnected);
     };
-  }, []);
+  }, [navigate]);
 
   const normalSale = async () => {
     const amount = saleAmountRef.current?.valueAsNumber;

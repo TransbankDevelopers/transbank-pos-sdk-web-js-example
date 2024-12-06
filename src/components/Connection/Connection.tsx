@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { AgentConnectionOptions, POS } from "transbank-pos-sdk-web";
 import POSimg from "../../assets/POS.png";
@@ -14,23 +14,24 @@ type AlertStatus = {
   alertTitle?: string;
 };
 
+const alertSuccessStatus: AlertStatus = {
+  alertType: AlertType.SUCCESS,
+  alertMessage: "Agente conectado correctamente",
+};
+
+const alertFailedStatus: AlertStatus = {
+  alertType: AlertType.FAILED,
+  alertMessage:
+    "No se pudo conectar con el agente Transbank POS. Verifica que se haya inicializado el agente en este equipo.",
+  showButton: true,
+};
+
 export default function Connection() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [agentConnected, setAgentConnected] = useState(false);
   const [ports, setPorts] = useState<{}[]>([]);
-  const alertSuccessStatus: AlertStatus = {
-    alertType: AlertType.SUCCESS,
-    alertMessage: "Agente conectado correctamente",
-  };
-
-  const alertFailedStatus: AlertStatus = {
-    alertType: AlertType.FAILED,
-    alertMessage:
-      "No se pudo conectar con el agente Transbank POS. Verifica que se haya inicializado el agente en este equipo.",
-    showButton: true,
-  };
 
   const [alertStatus, setAlertStatus] = useState(alertFailedStatus);
 
@@ -49,7 +50,7 @@ export default function Connection() {
     setAlertStatus(posAlert);
   };
 
-  const handleSocketConnected = async () => {
+  const handleSocketConnected = useCallback(async () => {
     try {
       const portStatus = await POS.getPortStatus();
       if (portStatus.connected) {
@@ -64,13 +65,13 @@ export default function Connection() {
       console.log(error);
       setPosAlert("Error obteniendo estado de puertos");
     }
-  };
+  }, [navigate]);
 
-  const handleSocketConnectionFailed = () => {
+  const handleSocketConnectionFailed = useCallback(() => {
     setShowAlert(true);
     setAlertStatus(alertFailedStatus);
     setIsLoading(false);
-  };
+  }, []);
 
   useEffect(() => {
     const isAgentConnected = POS.isConnected;
@@ -82,7 +83,7 @@ export default function Connection() {
       POS.off("socket_connected", handleSocketConnected);
       POS.off("socket_connection_failed", handleSocketConnectionFailed);
     };
-  }, []);
+  }, [handleSocketConnected, handleSocketConnectionFailed]);
 
   const handleConnectAgent = async () => {
     setIsLoading(true);
