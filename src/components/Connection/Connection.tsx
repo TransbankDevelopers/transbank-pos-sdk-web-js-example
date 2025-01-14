@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { AgentConnectionOptions, POS } from "transbank-pos-sdk-web";
-import POSimg from "../../assets/POS.png";
+import POSimg from "../../assets/POS.webp";
 import Button, { ButtonType } from "../Button/Button";
 import "./Connection.css";
 import Alert, { AlertType } from "../Alert/Alert";
