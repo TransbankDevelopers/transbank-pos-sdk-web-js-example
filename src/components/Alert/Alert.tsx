@@ -24,7 +24,7 @@ export default function Alert(props: Readonly<AlertProps>) {
   } = props;
   const handleButtonClick = async () => {
     window.location.href =
-      "https://github.com/TransbankDevelopers/transbank-pos-sdk-web-agent/releases";
+      "https://github.com/TransbankDevelopers/transbank-pos-sdk-web-agent2/releases";
   };
   const isSuccessAlert = type === AlertType.SUCCESS;
   const alertColor = isSuccessAlert ? "success" : "failed";
